@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:user_app/app/data/repository/http/auth_repository/auth_repository.dart';
+import 'package:user_app/app/ui/widgets/common_error_popup.dart';
 
 class AuthController extends GetxController {
   static AuthController get to => Get.put(AuthController());
@@ -59,5 +60,9 @@ class AuthController extends GetxController {
     if (kDebugMode) {
       print("user credentials $credential");
     }
+  }
+
+  login() async{
+    commonErrorPopUp(Get.context!, content: "Login Successfully");
   }
 }

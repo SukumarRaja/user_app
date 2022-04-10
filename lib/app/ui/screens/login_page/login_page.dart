@@ -6,7 +6,6 @@ import 'package:user_app/app/controllers/auth_controller/auth_controller.dart';
 import 'package:user_app/app/ui/screens/forgot_password_page/forgot_password.dart';
 import 'package:user_app/app/ui/screens/sign_up_page/sign_up_page.dart';
 import 'package:user_app/app/ui/widgets/common_button.dart';
-import 'package:user_app/app/ui/widgets/common_error_popup.dart';
 import 'package:user_app/app/ui/widgets/common_text_button.dart';
 
 import '../../widgets/common_divider.dart';
@@ -79,8 +78,9 @@ class LoginPage extends StatelessWidget {
               CommonButton(
                 text: "Login",
                 onPressed: () {
-                  
-                  Get.to(commonErrorPopUp(context,content: "jhkhjkhjk"));
+                  if (AuthController.to.loginFormKey.currentState!.validate()) {
+                    AuthController.to.login();
+                  }
                 },
               ),
               SizedBox(
