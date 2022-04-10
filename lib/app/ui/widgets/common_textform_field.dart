@@ -70,6 +70,7 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
           labelText: widget.labelText,
           hintText: widget.hintText,
           errorText: widget.errorText,
+          counterText: "",
           /*  enabledBorder: widget.underline
               ? InputStyles.inputUnderlineEnabledBorder()
               : InputStyles.inputEnabledBorder(),

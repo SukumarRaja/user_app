@@ -77,8 +77,9 @@ class SignUpPage extends StatelessWidget {
                             CommonTextFormField(
                               hintText: "Enter your Phone Number",
                               labelText: "Phone",
+                              maxLines: 10,
                               keyboardType: TextInputType.phone,
-                              controller: AuthController.to.passwordController,
+                              controller: AuthController.to.phoneController,
                               validator: (data) {
                                 if (data == null || data.isEmpty) {
                                   return 'Phone Number Field is Required';
@@ -104,11 +105,12 @@ class SignUpPage extends StatelessWidget {
                             CommonTextFormField(
                               hintText: "Enter your Confirm_password",
                               labelText: "Confirm Password",
+                              controller: AuthController.to.confirmPasswordController,
                               validator: (data) {
                                 if (data == null || data.isEmpty) {
                                   return 'Confirm Password Field is Required';
                                 } else if (data.length <= 8) {
-                                  return 'Password must be 8 Character';
+                                  return 'Confirm Password must be 8 Character';
                                 } else if (data !=
                                     AuthController.to.passwordController.text) {
                                   return 'Password must be same';
@@ -144,6 +146,7 @@ class SignUpPage extends StatelessWidget {
               ),
             ),
           );
-        });
+        },
+    );
   }
 }
