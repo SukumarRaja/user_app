@@ -23,7 +23,7 @@ class CommonTextFormField extends StatefulWidget {
     this.maxLines,
     this.suffixIcon,
     this.prefixIcon,
-    this.underline = false,
+    this.underline = false, this.maxLength,
   }) : super(key: key);
 
   //
@@ -49,6 +49,7 @@ class CommonTextFormField extends StatefulWidget {
   final Function? onTap;
   final int? minLines;
   final int? maxLines;
+  final int? maxLength;
 
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -66,6 +67,7 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: TextFormField(
+        maxLength:widget.maxLength,
         decoration: InputDecoration(
           labelText: widget.labelText,
           hintText: widget.hintText,
@@ -88,7 +90,10 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
           ),
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.suffixIcon ?? _getSuffixWidget(),
-          labelStyle: Theme.of(context).textTheme.bodyText1,
+          labelStyle: Theme
+              .of(context)
+              .textTheme
+              .bodyText1,
           contentPadding: EdgeInsets.all(10),
           filled: widget.fillColor != null,
           fillColor: widget.fillColor,
@@ -119,6 +124,7 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
 
   //check if it's password input
   bool makePasswordVisible = false;
+
   Widget _getSuffixWidget() {
     if (widget.obscureText!) {
       return ButtonTheme(
@@ -144,7 +150,7 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
       return SizedBox.shrink();
     }
   }
- /*  getPrefixWidget(){
+/*  getPrefixWidget(){
      Country selectedCountry;
      try {
       this.selectedCountry = Country.parse(AppStrings.countryCode

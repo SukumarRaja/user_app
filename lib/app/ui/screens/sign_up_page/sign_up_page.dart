@@ -77,7 +77,7 @@ class SignUpPage extends StatelessWidget {
                             CommonTextFormField(
                               hintText: "Enter your Phone Number",
                               labelText: "Phone",
-                              maxLines: 10,
+                              maxLength: 10,
                               keyboardType: TextInputType.phone,
                               controller: AuthController.to.phoneController,
                               validator: (data) {
@@ -130,16 +130,19 @@ class SignUpPage extends StatelessWidget {
                         }
                       },
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CommonTextButton(
-                          text: "Already have an account SignIn?",
-                          onTap: () {
-                            Get.to(LoginPage());
-                          },
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CommonTextButton(
+                            text: "Already have an account SignIn?",
+                            onTap: () {
+                              Get.to(LoginPage());
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

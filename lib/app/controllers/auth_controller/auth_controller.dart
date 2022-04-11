@@ -3,8 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:user_app/app/config/MyColors.dart';
 import 'package:user_app/app/data/repository/http/auth_repository/auth_repository.dart';
+import 'package:user_app/app/ui/screens/home_page/home_page.dart';
 import 'package:user_app/app/ui/widgets/common_error_popup.dart';
 
 class AuthController extends GetxController {
@@ -35,6 +38,10 @@ class AuthController extends GetxController {
   }
 
   void register() async {
+    const CircularProgressIndicator(
+      strokeWidth: 2,
+      color: AppColors.primaryColor,
+    );
     final User? credential = (await firebaseAuth
             .createUserWithEmailAndPassword(
                 email: emailController.text, password: passwordController.text)
@@ -51,9 +58,10 @@ class AuthController extends GetxController {
         "confirm_password": confirmPasswordController.text
       };
       reference.child(credential.uid).set(bodyData);
+      Get.to(const HomePage());
+      commonErrorPopUp(Get.context!, content: "Successfully Registered");
       if (kDebugMode) {
         print("Successfully Registered");
-
       }
     }
 
@@ -62,7 +70,7 @@ class AuthController extends GetxController {
     }
   }
 
-  login() async{
+  login() async {
     commonErrorPopUp(Get.context!, content: "Login Successfully");
   }
 }

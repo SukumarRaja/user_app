@@ -47,6 +47,7 @@ class LoginPage extends StatelessWidget {
                       hintText: "Enter your Password",
                       labelText: "Password",
                       obscureText: true,
+                      maxLines: 1,
                       controller: AuthController.to.loginPasswordController,
                       validator: (data) {
                         if (data == null || data.isEmpty) {
