@@ -1,14 +1,13 @@
 //Packages
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user_app/app/config/MyColors.dart';
 import 'package:user_app/app/data/repository/http/auth_repository/auth_repository.dart';
 import 'package:user_app/app/ui/screens/home_page/home_page.dart';
 import 'package:user_app/app/ui/widgets/common_error_popup.dart';
+import 'package:user_app/app/ui/widgets/progress_loading.dart';
 
 class AuthController extends GetxController {
   static AuthController get to => Get.put(AuthController());
@@ -38,10 +37,12 @@ class AuthController extends GetxController {
   }
 
   void register() async {
-    const CircularProgressIndicator(
-      strokeWidth: 2,
-      color: AppColors.primaryColor,
-    );
+    showDialog(
+        context: Get.context!,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const ProgressLoading(message: "Authenticating, Please wait");
+        });
     final User? credential = (await firebaseAuth
             .createUserWithEmailAndPassword(
                 email: emailController.text, password: passwordController.text)
@@ -71,6 +72,38 @@ class AuthController extends GetxController {
   }
 
   login() async {
-    commonErrorPopUp(Get.context!, content: "Login Successfully");
+    showDialog(
+        context: Get.context!,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const ProgressLoading(message: "Login, Please wait");
+        });
+    final User? credential = (await firebaseAuth
+            .signInWithEmailAndPassword(
+                email: loginEmailController.text, password: loginPasswordController.text)
+            .catchError((msg) {
+      print("Error from firebase" + msg.toString());
+      commonErrorPopUp(Get.context!,content: "${msg.toString()}", );
+      // Get.back();
+    }))
+        .user;
+    Get.back();
+    print("user $credential");
+
+    if (credential != null) {
+      reference
+          .child(credential.uid)
+          .once()
+          .then((value) {
+                if (value != null) {
+                  Get.to(HomePage());
+                  Get.snackbar("Success", "Login Successfully");
+                } else {
+                  firebaseAuth.signOut();
+                }
+              });
+    } else {
+      commonErrorPopUp(Get.context!, content: "Login Failed");
+    }
   }
 }

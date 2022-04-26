@@ -83,7 +83,7 @@ class SignUpPage extends StatelessWidget {
                               validator: (data) {
                                 if (data == null || data.isEmpty) {
                                   return 'Phone Number Field is Required';
-                                } else if (data.length <= 10) {
+                                } else if (data.length <10) {
                                   return 'Phone number must be 10';
                                 }
                                 return null;
